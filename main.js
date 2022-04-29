@@ -1,72 +1,157 @@
-// Simulador para controlar gastos para fines personales o comerciales. Se ingresa un monto incial para luego ir controlando cuanto dinero se gasta.
+
+/**************************************************************************************
+*       Simulador para controlar gastos para fines personales o comerciales.          *
+*     Se ingresa un monto incial para luego ir controlando cuanto dinero se gasta.    *
+**************************************************************************************/
+
+
 
 // Usuario ingresa entrada de información
 
-let nombre = prompt("¡Hola! ¿cómo te llamas?");
+let nombre = prompt("Ingrese su nombre de usuario");
 
-alert(`Bienvenid@, ${nombre}`);
+alert(`¡Hola ${nombre}!`);
 
 let billetera = Number(prompt(`${nombre}, ingresa tu dinero (* Sólo números *)`));
 
-let listaGastos = "";
+let listaGastos = [];
 
-// Se calcula el monto ingresa con el que el usuario desea restar cómo gasto
+let tieneGastos = false;
 
-function calcularGasto() {
+// Se crea clase con información del usuario
+
+class Persona {
+
+  constructor(nombre,dinero) {
+
+    this.nombre = nombre;
+
+    this.dinero = dinero;
+
+  }
+
+// Método dónde se calcula la resta del dinero del usuario con el gasto
+
+  calcularGasto() {
+
     let gasto = Number(prompt("Ingresa el monto que gastaste"));
 
-    if (gasto !== "" && gasto <= billetera) {
-      billetera -= gasto;
+    if (gasto !== "" && gasto <= this.dinero) {
 
-      let asunto = prompt("¿En qué gastaste tu dinero?");
+      this.dinero -= gasto;
 
-      listaGastos += `\n Gastaste $${gasto} en ${asunto} \n`;
+      let motivo = prompt("¿En qué gastaste tu dinero?");
+
+      const nuevoGasto = {
+
+        motivoGasto: motivo,
+
+        dineroGastado: gasto,
+
+      };
+
+      listaGastos.push(nuevoGasto);
+
+      tieneGastos = true;
+
+      alert(`Tu dinero ahora es de $${this.dinero}`);
+
     }
 
-    alert(`Tu dinero ahora es de $${billetera}`);
-}
+    else {
 
-// Se muestran los datos procesados y el estado de la billetera
+      alert("Error en cantidad ingresada");
 
-function verGastos() {
-  if (listaGastos !== "") {
-    alert(`Tus gastos son los siguientes: ${listaGastos}`);
+      alert(`Tienes $${this.dinero} en tu billetera`)
 
-    alert(`Tu dinero ahora es $${billetera}`);
-  } 
+    };
 
-  else {
-    alert("No tienes gastos");
-
-    alert(`Tu dinero sigue siendo $${billetera}`);
   }
+
+// Método dónde se muestran los datos procesados y el estado de la billetera
+
+  verGastos() {
+
+    for (const elemento of listaGastos) {
+
+    alert(`Gastaste $${elemento.dineroGastado}, en ${elemento.motivoGasto}`);
+
+    }
+    
+    alert(`Tu dinero ahora es $${this.dinero}`);
+  
+  };
+
 }
+
+const usuario = new Persona(nombre,billetera);
 
 // Bucle para verificar lo que realiza el usuario con el monto
 
-while (billetera !== "" && billetera > 0) {
+while (usuario.dinero >= 0) {
 
-  if (billetera < 0) {
-    alert("No tienes más dinero");
+  if (usuario.dinero === 0) {
+
+    alert("¡No tienes más dinero!");
 
     break;
+
   } 
 
   else {
+
     let consulta = prompt("¿Gastaste tu dinero? (Escribe 'Si' o 'No')");
 
     if (consulta === "si" || consulta === "Si" || consulta === "SI") {
-      calcularGasto();
+
+      usuario.calcularGasto();
+
     } 
       
     else if (consulta === "no" || consulta === "No" || consulta === "NO") {
+
       break;
+
     } 
       
     else {
+
       alert("Error al ingresar respuesta");
+
     }
+
   }
+
 }
 
-verGastos();
+if (tieneGastos === true) {
+
+  let consultaGastos = prompt("¿Quieres ver tus gastos? (Escribe 'Si' o 'No')");
+
+  if (consultaGastos === "si" || consultaGastos === "Si" || consultaGastos === "SI") {
+
+    usuario.verGastos();
+  
+  } 
+    
+  else if (consultaGastos === "no" || consultaGastos === "No" || consultaGastos === "NO") {
+  
+    alert(`¡Nos vemos ${usuario.nombre}!`);
+  
+  }
+
+  else {
+
+    alert("Error al ingresar respuesta");
+  
+  }
+
+}
+
+else {
+
+  alert(`No tienes gastos. Tu dinero sigue siendo $${usuario.dinero}`);
+
+  alert(`¡Nos vemos ${usuario.nombre}!`);
+
+}
