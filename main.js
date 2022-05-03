@@ -10,15 +10,25 @@
 
 let nombre = prompt("Ingrese su nombre de usuario");
 
-alert(`¡Hola ${nombre}!`);
+function saludar(nombreIngresado) {
+
+  alert(`¡Hola ${nombreIngresado}!`);
+
+}
+
+function despedirse(nombreIngresado) {
+
+  alert(`¡Nos vemos ${nombreIngresado}!`);
+
+}
+
+saludar(nombre);
 
 let billetera = Number(prompt(`${nombre}, ingresa tu dinero (* Sólo números *)`));
 
 let listaGastos = [];
 
 let tieneGastos = false;
-
-// Se crea clase con información del usuario
 
 class Persona {
 
@@ -77,7 +87,7 @@ class Persona {
     alert(`Gastaste $${elemento.dineroGastado}, en ${elemento.motivoGasto}`);
 
     }
-    
+
     alert(`Tu dinero ahora es $${this.dinero}`);
   
   };
@@ -136,7 +146,7 @@ if (tieneGastos === true) {
     
   else if (consultaGastos === "no" || consultaGastos === "No" || consultaGastos === "NO") {
   
-    alert(`¡Nos vemos ${usuario.nombre}!`);
+    despedirse(usuario.nombre);
   
   }
 
@@ -152,6 +162,6 @@ else {
 
   alert(`No tienes gastos. Tu dinero sigue siendo $${usuario.dinero}`);
 
-  alert(`¡Nos vemos ${usuario.nombre}!`);
+  despedirse(usuario.nombre);
 
 }
