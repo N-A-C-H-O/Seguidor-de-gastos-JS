@@ -6,29 +6,39 @@
 
 
 
-// Usuario ingresa entrada de información
+// Se declaran todas las variables utilizadas en el algoritmo
 
-let nombre = prompt("Ingrese su nombre de usuario");
+let nombre;
 
-function saludar(nombreIngresado) {
+let billetera;
 
-  alert(`¡Hola ${nombreIngresado}!`);
+let gasto;
 
-}
-
-function despedirse(nombreIngresado) {
-
-  alert(`¡Nos vemos ${nombreIngresado}!`);
-
-}
-
-saludar(nombre);
-
-let billetera = Number(prompt(`${nombre}, ingresa tu dinero (* Sólo números *)`));
+let motivo;
 
 let listaGastos = [];
 
 let tieneGastos = false;
+
+let formulario = document.getElementById("formularioDatos"); 
+
+let inputUsuarioNombre = document.getElementById("usuarioNombre");
+
+let inputUsuarioDinero = document.getElementById("usuarioDinero");
+
+let inputTituloGasto = document.getElementById("usuarioTituloGasto");
+
+let inputMontoGasto = document.getElementById("usuarioMontoGasto");
+
+let botonUsuarioGastos = document.getElementById("botonUsuarioGastos");
+
+let botonEnviarDatos = document.getElementById("botonEnviarDatos");
+
+let botonCrearGasto = document.getElementById("botonCrearGasto");
+
+let botonVerGastos = document.getElementById("botonVerGastos");
+
+let botonVolver = document.getElementById("botonVolver");
 
 class Persona {
 
@@ -40,17 +50,11 @@ class Persona {
 
   }
 
-// Método dónde se calcula la resta del dinero del usuario con el gasto
-
   calcularGasto() {
 
-    let gasto = Number(prompt("Ingresa el monto que gastaste"));
-
-    if (gasto !== "" && gasto <= this.dinero) {
+    if(gasto > 0) {
 
       this.dinero -= gasto;
-
-      let motivo = prompt("¿En qué gastaste tu dinero?");
 
       const nuevoGasto = {
 
@@ -64,104 +68,136 @@ class Persona {
 
       tieneGastos = true;
 
-      alert(`Tu dinero ahora es de $${this.dinero}`);
-
     }
 
-    else {
-
-      alert("Error en cantidad ingresada");
-
-      alert(`Tienes $${this.dinero} en tu billetera`)
-
-    };
-
   }
-
-// Método dónde se muestran los datos procesados y el estado de la billetera
 
   verGastos() {
 
     for (const elemento of listaGastos) {
 
-    alert(`Gastaste $${elemento.dineroGastado}, en ${elemento.motivoGasto}`);
+    let li = document.createElement("LI");
+
+    li.innerHTML = `Gastaste $${elemento.dineroGastado}, en ${elemento.motivoGasto}`;
+
+    document.getElementById("listaDeGastos").append(li);
 
     }
-
-    alert(`Tu dinero ahora es $${this.dinero}`);
   
   };
 
 }
 
-const usuario = new Persona(nombre,billetera);
+// Se crea una variable para almacenar los datos de un nuevo objeto
 
-// Bucle para verificar lo que realiza el usuario con el monto
+let usuario;
 
-while (usuario.dinero >= 0) {
+// Secuencia del evento al enviar datos
+
+formulario.addEventListener("submit",(e) => {
+
+  e.preventDefault();
+  
+  nombre = inputUsuarioNombre.value;
+  
+  inputUsuarioNombre.value = "";
+  
+  billetera = Number(inputUsuarioDinero.value);
+  
+  inputUsuarioDinero.value = "";
+  
+  usuario = new Persona(nombre,billetera);
+  
+  document.querySelector(".primer-formulario").style.display = "none";
+  
+  botonEnviarDatos.style.display = "none";
+  
+  document.getElementById("tituloUsuario").style.display = "block";
+  
+  document.getElementById("tituloUsuario").innerHTML = `¡Bienvenido ${usuario.nombre}!`;
+
+  document.getElementById("tituloBilletera").style.display = "block";
+  
+  document.getElementById("tituloBilletera").innerHTML = `Tu dinero es de: $${usuario.dinero}`;
+  
+  botonUsuarioGastos.style.display = "block";
+
+  document.getElementById("botonResetearDatos").style.display = "none";
+  
+});
+
+// Secuencia de evento al agregar gastos
+
+botonUsuarioGastos.addEventListener("click",() => {
+
+  document.querySelector(".segundo-formulario").style.display = "block";
+  
+  botonUsuarioGastos.style.display = "none";
+  
+  botonCrearGasto.style.display = "block";
+
+  document.getElementById("botonResetearDatos").style.display = "block";
+  
+});
+
+// Secuencia para el evento de crear un nuevo gasto
+
+botonCrearGasto.addEventListener("click",() => {
+
+  gasto = Number(inputMontoGasto.value);
+  
+  inputMontoGasto.value = "";
+  
+  motivo = inputTituloGasto.value;
+  
+  inputTituloGasto.value = "";
 
   if (usuario.dinero === 0) {
 
-    alert("¡No tienes más dinero!");
-
-    break;
-
-  } 
-
-  else {
-
-    let consulta = prompt("¿Gastaste tu dinero? (Escribe 'Si' o 'No')");
-
-    if (consulta === "si" || consulta === "Si" || consulta === "SI") {
-
-      usuario.calcularGasto();
-
-    } 
-      
-    else if (consulta === "no" || consulta === "No" || consulta === "NO") {
-
-      break;
-
-    } 
-      
-    else {
-
-      alert("Error al ingresar respuesta");
-
-    }
-
-  }
-
-}
-
-if (tieneGastos === true) {
-
-  let consultaGastos = prompt("¿Quieres ver tus gastos? (Escribe 'Si' o 'No')");
-
-  if (consultaGastos === "si" || consultaGastos === "Si" || consultaGastos === "SI") {
-
-    usuario.verGastos();
+    document.querySelector(".segundo-formulario").style.display = "none";
   
-  } 
+    botonCrearGasto.style.display = "none";
+  
+    document.getElementById("botonResetearDatos").style.display = "none";
+  
+    let sinDinero = document.createElement("P");
     
-  else if (consultaGastos === "no" || consultaGastos === "No" || consultaGastos === "NO") {
+    sinDinero.innerHTML = "¡No tienes más dinero!";
   
-    despedirse(usuario.nombre);
+    sinDinero.setAttribute("class","text-center mt-2 mb-2")
   
-  }
-
-  else {
-
-    alert("Error al ingresar respuesta");
+    document.getElementById("main").append(sinDinero);
   
   }
 
-}
+  else if (gasto <= usuario.dinero) {
+    
+    usuario.calcularGasto();
+    
+  }
+    
+  document.getElementById("tituloBilletera").innerHTML = `Tu dinero es de: $${usuario.dinero}`;
+  
+  if (tieneGastos === true) {
+  
+    botonVerGastos.style.display = "block";
+  
+  }
+  
+});
 
-else {
+// Secuencia para el evento de ver los gastos del usuario
 
-  alert(`No tienes gastos. Tu dinero sigue siendo $${usuario.dinero}`);
+botonVerGastos.addEventListener("click", () => {
+  
+  document.querySelector(".segundo-formulario").style.display = "none";
+  
+  usuario.verGastos();
+  
+  botonVerGastos.style.display = "none";
+  
+  botonCrearGasto.style.display = "none";
 
-  despedirse(usuario.nombre);
-
-}
+  document.getElementById("botonResetearDatos").style.display = "none";
+  
+});

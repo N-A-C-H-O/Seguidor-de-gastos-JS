@@ -8,3 +8,9 @@ body {
     font-family: 'Roboto', sans-serif !important; 
 
 }
+
+
+#botonUsuarioGastos, #botonCrearGasto, #botonVerGastos, #botonVolver, .segundo-formulario, #tituloUsuario, #tituloBilletera, #usuarioListaGastos {
+    display: none;
+}
+
