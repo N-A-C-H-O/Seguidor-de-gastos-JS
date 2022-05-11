@@ -1,114 +1,224 @@
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
   <meta charset="UTF-8" />
+
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>MyExpense - Administra tu dinero</title>
-  <link rel="stylesheet" href="styles.css" />
+
+  <link rel="stylesheet" href="styles/styles.css" />
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+
 </head>
+
 <body>
+
   <header>
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
       <div class="container-fluid">
+
         <h1 class="navbar-brand ms-3">MyExpense</h1>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
           <span class="navbar-toggler-icon"></span>
+
         </button>
+
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+
           <ul class="navbar-nav">
+
             <li class="nav-item me-3">
+
               <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+
             </li>
+
             <li class="nav-item me-3">
+
               <a class="nav-link" href="#">Acerca de</a>
+
             </li>
+
             <li class="nav-item me-3">
+
               <a class="nav-link" href="#">Contacto</a>
+
             </li>
+
           </ul>
+
         </div>
+
       </div>
+
     </nav>
+
   </header>
+
   <section id="main" class="mt-5">
+
     <h2 class="mt-5 mb-5 text-center">¡Controla tus gastos!</h2>
+
     <h4 id="tituloUsuario" class="text-center mt-5 mb-4"></h4>
+
     <p id="tituloBilletera" class="text-center mb-3"></p>
+
     <p class="text-center mt-5" id="usuarioListaGastos">Tus gastos son:</p>
+
     <ul id="listaDeGastos" class="list-unstyled text-center"></ul>
+
     <form id="formularioDatos" class="container">
+
       <div class="mb-3 primer-formulario">
+
         <label for="usuarioNombre" class="form-label">Nombre</label>
+
         <input type="text" class="form-control" id="usuarioNombre" placeholder="Ingrese su nombre" required />
+
         <label class="mt-4 mb-2" for="usuarioDinero" class="form-label">Billetera</label>
+
         <input type="number" class="form-control" id="usuarioDinero" placeholder="Ingrese su dinero"
           aria-describedby="ingresoAyuda" required />
+
         <div id="ingresoAyuda" class="form-text">
+
           Recuerda ingresar sólo números
+
         </div>
+
       </div>
+
       <div class="mb-3 segundo-formulario">
+
         <label for="usuarioTituloGasto" class="form-label">¿En qué gastaste tu dinero?</label>
+
         <input type="text" class="form-control" id="usuarioTituloGasto" placeholder="Ingrese el nombre del gasto" />
+
         <label class="mt-4 mb-2" for="usuarioMontoGasto" class="form-label label-1">¿Cuánto dinero gastaste?</label>
+
         <input type="number" class="form-control" id="usuarioMontoGasto" placeholder="Ingrese su gasto"
           aria-describedby="ingresoAyuda" />
+
         <div id="ingresoAyuda" class="form-text">
+
           Recuerda ingresar sólo números
+
         </div>
+
       </div>
+
       <div class="d-flex justify-content-center">
+
         <button id="botonEnviarDatos" type="submit" class="btn btn-success m-2">
+
           Ingresar
+
         </button>
+
         <button id="botonUsuarioGastos" type="button" class="btn btn-primary m-2">
+
           Agregar gastos
+
         </button>
+
         <button id="botonCrearGasto" type="button" class="btn btn-success m-2">
+
           Crear gasto
+
         </button>
+
         <button id="botonResetearDatos" type="reset" class="btn btn-danger m-2">
+
           Reiniciar
+
         </button>
+
         <button id="botonVerGastos" type="button" class="btn btn-dark m-2">
+
           Ver gastos
+
         </button>
+
       </div>
+
     </form>
+
   </section>
+
   <section class="mt-5 mb-5">
+
     <h3 class="text-center mt-5 mb-5">¿Por qué MyExpense?</h3>
+
     <p class="mt-5 mb-5 text-center">
+
       ¿Quieres controlar lo que haces con tu dinero? MyExpense es la solución
       a esto. Te permitirá administrar todo lo que entra y sale de tu
       billetera en cuestión de segundos.
+
     </p>
+
   </section>
+
   <footer class="mt-5">
+
     <ul class="d-flex justify-content-center list-unstyled">
+
       <li class="m-2">
+
         <a href="https://www.facebook.com" target="_blank"><i class="fa-brands fa-facebook fs-2"></i></a>
+
       </li>
+
       <li class="m-2">
+
         <a href="https://www.instagram.com" target="_blank"><i class="fa-brands fa-instagram fs-2"></i></a>
+
       </li>
+
       <li class="m-2">
+
         <a href="https://www.twitter.com" target="_blank"><i class="fa-brands fa-twitter fs-2"></i></a>
+
       </li>
+      
     </ul>
+
     <p class="mt-5 text-center">
+
       ©2022 MyExpense | Todos los derechos reservados | info@myexpense.com |
+
       <a href="#">Privacidad</a>
+
     </p>
+
   </footer>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+
   </script>
+
   <script src="https://kit.fontawesome.com/41d1e297c9.js" crossorigin="anonymous"></script>
-  <script src="main.js"></script>
+
+  <script src="assets/scripts/objects.js"></script>
+
+  <script src="assets/scripts/nodos.js"></script>
+
+  <script src="assets/scripts/main.js"></script>
+
 </body>
+
 </html>

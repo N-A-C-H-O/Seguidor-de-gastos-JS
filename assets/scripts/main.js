@@ -5,9 +5,6 @@
 **************************************************************************************/
 
 
-
-// Se declaran todas las variables utilizadas en el algoritmo
-
 let nombre;
 
 let billetera;
@@ -20,93 +17,24 @@ let listaGastos = [];
 
 let tieneGastos = false;
 
-let formulario = document.getElementById("formularioDatos"); 
 
-let inputUsuarioNombre = document.getElementById("usuarioNombre");
-
-let inputUsuarioDinero = document.getElementById("usuarioDinero");
-
-let inputTituloGasto = document.getElementById("usuarioTituloGasto");
-
-let inputMontoGasto = document.getElementById("usuarioMontoGasto");
-
-let botonUsuarioGastos = document.getElementById("botonUsuarioGastos");
-
-let botonEnviarDatos = document.getElementById("botonEnviarDatos");
-
-let botonCrearGasto = document.getElementById("botonCrearGasto");
-
-let botonVerGastos = document.getElementById("botonVerGastos");
-
-let botonVolver = document.getElementById("botonVolver");
-
-class Persona {
-
-  constructor(nombre,dinero) {
-
-    this.nombre = nombre;
-
-    this.dinero = dinero;
-
-  }
-
-  calcularGasto() {
-
-    if(gasto > 0) {
-
-      this.dinero -= gasto;
-
-      const nuevoGasto = {
-
-        motivoGasto: motivo,
-
-        dineroGastado: gasto,
-
-      };
-
-      listaGastos.push(nuevoGasto);
-
-      tieneGastos = true;
-
-    }
-
-  }
-
-  verGastos() {
-
-    for (const elemento of listaGastos) {
-
-    let li = document.createElement("LI");
-
-    li.innerHTML = `Gastaste $${elemento.dineroGastado}, en ${elemento.motivoGasto}`;
-
-    document.getElementById("listaDeGastos").append(li);
-
-    }
-  
-  };
-
-}
-
-// Se crea una variable para almacenar los datos de un nuevo objeto
-
-let usuario;
-
-// Secuencia del evento al enviar datos
+const usuario = new Persona("user",0);
 
 formulario.addEventListener("submit",(e) => {
 
   e.preventDefault();
   
   nombre = inputUsuarioNombre.value;
+
+  usuario.setNombreUsuario(nombre);
   
   inputUsuarioNombre.value = "";
   
   billetera = Number(inputUsuarioDinero.value);
+
+  usuario.setDineroUsuario(billetera);
   
   inputUsuarioDinero.value = "";
-  
-  usuario = new Persona(nombre,billetera);
   
   document.querySelector(".primer-formulario").style.display = "none";
   
@@ -126,8 +54,6 @@ formulario.addEventListener("submit",(e) => {
   
 });
 
-// Secuencia de evento al agregar gastos
-
 botonUsuarioGastos.addEventListener("click",() => {
 
   document.querySelector(".segundo-formulario").style.display = "block";
@@ -139,8 +65,6 @@ botonUsuarioGastos.addEventListener("click",() => {
   document.getElementById("botonResetearDatos").style.display = "block";
   
 });
-
-// Secuencia para el evento de crear un nuevo gasto
 
 botonCrearGasto.addEventListener("click",() => {
 
@@ -185,8 +109,6 @@ botonCrearGasto.addEventListener("click",() => {
   }
   
 });
-
-// Secuencia para el evento de ver los gastos del usuario
 
 botonVerGastos.addEventListener("click", () => {
   
