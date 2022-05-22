@@ -15,3 +15,9 @@ let botonEnviarDatos = document.getElementById("botonEnviarDatos");
 let botonCrearGasto = document.getElementById("botonCrearGasto");
 
 let botonVerGastos = document.getElementById("botonVerGastos");
+
+let botonBorrarDatos = document.getElementById("botonBorrarDatos");
+
+let botonRegresar = document.getElementById("botonRegresarInicio");
+
+let botonBorrarGasto = document.getElementById("botonBorrarGasto");

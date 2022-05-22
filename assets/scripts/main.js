@@ -21,6 +21,8 @@ const obtenerStorage = (valor) => sessionStorage.getItem(valor);
 
 const insertarStorage = (clave,valor) => sessionStorage.setItem(clave,valor);
 
+const removerStorage = (clave) => sessionStorage.removeItem(clave);
+
 let nombreStorage = obtenerStorage("nombreUsuario");
 
 let billeteraStorage = obtenerStorage("dineroUsuario");
@@ -50,6 +52,8 @@ if (nombreStorage && billeteraStorage) {
   document.getElementById("tituloBilletera").innerHTML = `Tu dinero es de: $${usuario.dinero}`;
   
   botonUsuarioGastos.style.display = "block";
+
+  botonBorrarDatos.style.display = "block";
 
   document.getElementById("botonResetearDatos").style.display = "none";
 
@@ -98,6 +102,8 @@ formulario.addEventListener("submit",(e) => {
   
   botonUsuarioGastos.style.display = "block";
 
+  botonBorrarDatos.style.display = "block";
+
   document.getElementById("botonResetearDatos").style.display = "none";
   
 });
@@ -107,6 +113,8 @@ botonUsuarioGastos.addEventListener("click",() => {
     document.querySelector(".segundo-formulario").style.display = "block";
   
     botonUsuarioGastos.style.display = "none";
+
+    botonBorrarDatos.style.display = "none";
   
     botonCrearGasto.style.display = "block";
 
@@ -114,6 +122,39 @@ botonUsuarioGastos.addEventListener("click",() => {
 
   
 });
+
+botonBorrarDatos.addEventListener("click",() =>{
+
+  removerStorage("nombreUsuario");
+  
+  removerStorage("dineroUsuario");
+
+  removerStorage("listaDeGastos");
+
+  usuario.setNombreUsuario("user");
+
+  usuario.setDineroUsuario(0);
+
+  listaGastos = [];
+
+  botonUsuarioGastos.style.display = "none";
+
+  botonBorrarDatos.style.display = "none";
+
+  botonVerGastos.style.display = "none";
+
+  document.querySelector(".primer-formulario").style.display = "block";
+
+  botonEnviarDatos.style.display = "block";
+
+  document.getElementById("botonResetearDatos").style.display = "block";
+
+  document.getElementById("tituloUsuario").style.display = "none";
+
+  document.getElementById("tituloBilletera").style.display = "none";
+
+
+})
 
 botonCrearGasto.addEventListener("click",() => {
 
@@ -163,18 +204,43 @@ botonCrearGasto.addEventListener("click",() => {
   
 });
 
+
 botonVerGastos.addEventListener("click", () => {
   
   document.querySelector(".segundo-formulario").style.display = "none";
+
+  document.getElementById("botonResetearDatos").style.display = "none";
     
   usuario.verGastos();
 
   botonUsuarioGastos.style.display = "none";
+
+  botonBorrarDatos.style.display = "none";
   
   botonVerGastos.style.display = "none";
   
   botonCrearGasto.style.display = "none";
 
-  document.getElementById("botonResetearDatos").style.display = "none";
+  botonRegresar.style.display = "block";
   
 });
+
+botonRegresar.addEventListener("click", () => {
+
+  location.reload()
+
+})
+
+document.getElementById("listaDeGastos").addEventListener("click", (e) => {
+  
+  e.preventDefault;
+  
+  if (e.target.id === "botonBorrarGastos") {
+
+    usuario.eliminarGasto(e.target.dataset.gasto);
+
+  }
+
+})
+
+
