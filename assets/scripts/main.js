@@ -5,6 +5,10 @@
 **************************************************************************************/
 
 
+const DateTime = luxon.DateTime;
+
+const fecha = DateTime.now();
+
 let nombre;
 
 let billetera;
@@ -37,7 +41,7 @@ if (nombreStorage && billeteraStorage) {
 
   usuario.setNombreUsuario(nombreStorage);
 
-  usuario.setDineroUsuario(billeteraStorage);
+  usuario.setDineroUsuario(Number(billeteraStorage));
 
   document.querySelector(".primer-formulario").style.display = "none";
   
@@ -105,58 +109,125 @@ formulario.addEventListener("submit",(e) => {
   botonBorrarDatos.style.display = "block";
 
   document.getElementById("botonResetearDatos").style.display = "none";
+
+  Swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: '¡Cuenta creada con éxito!',
+    showConfirmButton: false,
+    timer: 1500
+  })
   
 });
 
 botonUsuarioGastos.addEventListener("click",() => {
 
-    document.querySelector(".segundo-formulario").style.display = "block";
-  
-    botonUsuarioGastos.style.display = "none";
+    if (usuario.dinero !== 0 && usuario.dinero !== "0") {
 
-    botonBorrarDatos.style.display = "none";
+      document.querySelector(".segundo-formulario").style.display = "block";
   
-    botonCrearGasto.style.display = "block";
+      botonUsuarioGastos.style.display = "none";
 
-    document.getElementById("botonResetearDatos").style.display = "block";
+      botonBorrarDatos.style.display = "none";
+  
+      botonCrearGasto.style.display = "block";
+
+      document.getElementById("botonResetearDatos").style.display = "block";
+
+    }
+
+    else {
+
+      Swal.fire({
+
+        icon: 'error',
+  
+        title: 'Oops...',
+  
+        text: '¡No tienes más dinero!',
+  
+      })
+
+    }
+
+    
 
   
 });
 
 botonBorrarDatos.addEventListener("click",() =>{
 
-  removerStorage("nombreUsuario");
+  Swal.fire({
+
+    title: '¿Estás seguro?',
+
+    text: "¡No podrás recuperar tus datos!",
+
+    icon: 'warning',
+
+    showCancelButton: true,
+
+    confirmButtonColor: '#3085d6',
+
+    cancelButtonColor: '#d33',
+
+    confirmButtonText: 'Sí, quiero eliminar',
+
+    cancelButtonText: 'Cancelar'
+
+  })
   
-  removerStorage("dineroUsuario");
+  .then((resultado) => {
 
-  removerStorage("listaDeGastos");
+    if (resultado.isConfirmed) {
 
-  usuario.setNombreUsuario("user");
+      Swal.fire(
 
-  usuario.setDineroUsuario(0);
+        '¡Eliminado!',
 
-  listaGastos = [];
+        'Todos tus datos fueron borrados.',
 
-  botonUsuarioGastos.style.display = "none";
+        'success'
 
-  botonBorrarDatos.style.display = "none";
+      )
 
-  botonVerGastos.style.display = "none";
+      removerStorage("nombreUsuario");
+  
+      removerStorage("dineroUsuario");
 
-  document.querySelector(".primer-formulario").style.display = "block";
+      removerStorage("listaDeGastos");
 
-  botonEnviarDatos.style.display = "block";
+      usuario.setNombreUsuario("user");
 
-  document.getElementById("botonResetearDatos").style.display = "block";
+      usuario.setDineroUsuario(0);
 
-  document.getElementById("tituloUsuario").style.display = "none";
+      listaGastos = [];
 
-  document.getElementById("tituloBilletera").style.display = "none";
+      botonUsuarioGastos.style.display = "none";
 
+      botonBorrarDatos.style.display = "none";
+
+      botonVerGastos.style.display = "none";
+
+      document.querySelector(".primer-formulario").style.display = "block";
+
+      botonEnviarDatos.style.display = "block";
+
+      document.getElementById("botonResetearDatos").style.display = "block";
+
+      document.getElementById("tituloUsuario").style.display = "none";
+
+      document.getElementById("tituloBilletera").style.display = "none";
+
+    }
+
+  })
 
 })
 
 botonCrearGasto.addEventListener("click",() => {
+
+  let cantidadGastos = listaGastos.length;
 
   gasto = Number(inputMontoGasto.value);
   
@@ -166,27 +237,49 @@ botonCrearGasto.addEventListener("click",() => {
   
   inputTituloGasto.value = "";
 
-  if (usuario.dinero === 0) {
+  if (usuario.dinero === 0 || usuario.dinero === "0") {
 
     document.querySelector(".segundo-formulario").style.display = "none";
   
     botonCrearGasto.style.display = "none";
   
     document.getElementById("botonResetearDatos").style.display = "none";
-  
-    let sinDinero = document.createElement("P");
-    
-    sinDinero.innerHTML = "¡No tienes más dinero!";
-  
-    sinDinero.setAttribute("class","text-center mt-2 mb-2");
-  
-    document.getElementById("main").append(sinDinero);
+
+    Swal.fire({
+
+      icon: 'error',
+
+      title: 'Oops...',
+
+      text: '¡No tienes más dinero!',
+
+    })
   
   }
 
   else if (gasto <= usuario.dinero) {
     
     usuario.calcularGasto();
+
+    let sumaCantidadGastos = listaGastos.length;
+
+    if (cantidadGastos !== sumaCantidadGastos) {
+
+      Swal.fire({
+
+        position: 'bottom-end',
+    
+        icon: 'success',
+    
+        title: 'Gasto creado correctamente',
+    
+        showConfirmButton: false,
+    
+        timer: 1500
+    
+      })
+
+    }
 
   }
     
@@ -229,6 +322,8 @@ botonRegresar.addEventListener("click", () => {
 
   location.reload()
 
+
+
 })
 
 document.getElementById("listaDeGastos").addEventListener("click", (e) => {
@@ -237,7 +332,43 @@ document.getElementById("listaDeGastos").addEventListener("click", (e) => {
   
   if (e.target.id === "botonBorrarGastos") {
 
-    usuario.eliminarGasto(e.target.dataset.gasto);
+    Swal.fire({
+
+      title: '¿Seguro que quieres eliminar?',
+
+      text: "¡Tu gasto se eliminará!",
+
+      icon: 'warning',
+
+      showCancelButton: true,
+
+      confirmButtonColor: '#3085d6',
+
+      cancelButtonColor: '#d33',
+
+      confirmButtonText: 'Sí, eliminar',
+
+      cancelButtonText: 'Cancelar'
+
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+
+        Swal.fire(
+
+          '¡Eliminado!',
+
+          'Tu gasto se ha eliminado correctamente',
+
+          'success'
+
+        )
+
+        usuario.eliminarGasto(e.target.dataset.gasto);
+
+      }
+
+    })
 
   }
 

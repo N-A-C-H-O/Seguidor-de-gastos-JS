@@ -37,7 +37,7 @@ class Persona {
       let divGasto = document.createElement("div");
   
       divGasto.innerHTML = `<p class="m-3">Gastaste <b>$${elemento.dineroGastado}</b>, en <b>${elemento.motivoGasto}</b></p>
-                            <p class="fw-bold m-3">FECHA</p>
+                            <p class="fw-bold m-3">${fecha.toLocaleString()}</p>
                             <a class="d-block mx-3 mt-3" style="cursor: pointer">
                               <i id="botonBorrarGastos" data-gasto="${elemento.motivoGasto}" class="fa-solid fa-trash-can text-danger"></i>
                             </a>`;
@@ -80,7 +80,7 @@ class Persona {
 
           document.getElementById(gasto).remove();
 
-          this.setDineroUsuario(this.dinero += listaGastos[i].dineroGastado);
+          this.setDineroUsuario(this.dinero += Number(listaGastos[i].dineroGastado));
 
           insertarStorage("dineroUsuario", this.dinero);
 
