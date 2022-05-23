@@ -138,11 +138,17 @@
 
       <h2 class="mt-5 mb-5 text-center">¡Controla tus gastos aquí!</h2>
 
-      <h4 id="tituloUsuario" class="text-center mt-5 mb-4"></h4>
+      <h4 id="tituloUsuario" class="text-center mt-5 mb-4 fw-bold"></h4>
 
-      <p id="tituloBilletera" class="text-center mb-3"></p>
+      <div id="datosDelUsuario" class="d-flex justify-content-center mt-3 mb-3">
 
-      <p class="text-center mt-5" id="usuarioListaGastos">Tus gastos son:</p>
+        <p id="tituloBilletera" class="text-center mb-3 mx-3 text-success fw-bold fs-5"></p>
+
+        <p id="tituloNombre" class="text-center mb-3 mx-3 fw-bold fs-5"></p>
+
+      </div>
+
+      <p class="text-center mt-5 fw-bold" id="usuarioListaGastos">Tus gastos son:</p>
 
       <div id="listaDeGastos" class="list-unstyled text-center">
         
@@ -154,12 +160,12 @@
 
           <label for="usuarioNombre" class="form-label">Nombre</label>
 
-          <input type="text" class="form-control" id="usuarioNombre" placeholder="Ingrese su nombre" required />
+          <input type="text" class="form-control" id="usuarioNombre" placeholder="Ingrese su nombre" autocomplete="off" required />
 
           <label class="mt-4 mb-2" for="usuarioDinero" class="form-label">Billetera</label>
 
           <input type="number" class="form-control" id="usuarioDinero" placeholder="Ingrese su dinero"
-            aria-describedby="ingresoAyuda" required />
+            aria-describedby="ingresoAyuda" autocomplete="off" required />
 
           <div id="ingresoAyuda" class="form-text">
 
@@ -230,6 +236,12 @@
 
             Regresar
 
+          </button> 
+
+          <button id="botonSumaTotalGastos" type="button" class="btn btn-outline-secondary m-2 mt-5">
+
+            Sumar gastos
+
           </button>
 
         </div>
@@ -270,9 +282,9 @@
 
               <div class="info-container__card card-body">
 
-                <i class="info-container__card__i fa-solid fa-wallet d-block text-center"></i>
+                <i class="info-container__card__i fa-solid fa-hand-holding-dollar d-block text-center"></i>
 
-                <h5 class="info-container__card__h5 text-center card-title">Controla tus gastos</h5>
+                <h5 class="info-container__card__h5 text-center card-title fw-bold">Controla tus gastos</h5>
 
                 <p class="info-container__card__p text-center card-text mt-3">Sigue los movimientos de tu billetera diariamente. MyExpense te permite mantener organizada tu vida económica.</p>
 
@@ -290,7 +302,7 @@
 
                 <i class="info-container__card__i fa-solid fa-child-reaching d-block text-center"></i>
 
-                <h5 class="info-container__card__h5 text-center card-title">Fácil de usar</h5>
+                <h5 class="info-container__card__h5 text-center card-title fw-bold">Fácil de usar</h5>
 
                 <p class="info-container__card__p text-center card-text mt-3">Simulador con interfaz sencilla que permite al usuario sentirse cómodo durante el uso.</p>
 
@@ -306,9 +318,9 @@
 
               <div class="info-container__card card-body">
 
-                <i class="info-container__card__i fa-solid fa-floppy-disk d-block text-center"></i>
+                <i class="info-container__card__i fa-solid fa-cloud-arrow-down d-block text-center"></i>
 
-                <h5 class="info-container__card__h5 text-center card-title">Almacena datos</h5>
+                <h5 class="info-container__card__h5 text-center card-title fw-bold">Almacena datos</h5>
 
                 <p class="info-container__card__p text-center card-text mt-3">MyExpense se encarga de almacenar tus datos, evitando cualquier pérdida de los mismos.</p>
 
@@ -378,11 +390,11 @@
 
     <!--Luxon JS-->
 
-    <script src="https://cdn.jsdelivr.net/npm/luxon@2.3.0/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@2.4.0/build/global/luxon.min.js"></script>
 
     <!--Sweet Alert JS-->
 
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!--Boostrap JS-->
 

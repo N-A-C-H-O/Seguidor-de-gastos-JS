@@ -21,3 +21,5 @@ let botonBorrarDatos = document.getElementById("botonBorrarDatos");
 let botonRegresar = document.getElementById("botonRegresarInicio");
 
 let botonBorrarGasto = document.getElementById("botonBorrarGasto");
+
+let botonSumaTotalGastos = document.getElementById("botonSumaTotalGastos");

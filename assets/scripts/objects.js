@@ -66,34 +66,38 @@ class Persona {
   
     }
 
+    sumarTotalGastos() {
+
+      const gastosReducidos = listaGastos.reduce((acumulador,elemento) => acumulador + elemento.dineroGastado,0);
+
+      return gastosReducidos;
+
+    }
+
+
     eliminarGasto(gasto) {
 
       for(let i in listaGastos) {
 
         if (listaGastos[i].motivoGasto === gasto) {
 
-          if (listaGastos.length === 1) {
-
-            tieneGastos = false;
-
-          }
+          listaGastos.length === 1 && (tieneGastos = false);
 
           document.getElementById(gasto).remove();
 
-          this.setDineroUsuario(this.dinero += Number(listaGastos[i].dineroGastado));
+          this.setDineroUsuario(this.dinero += listaGastos[i].dineroGastado);
 
           insertarStorage("dineroUsuario", this.dinero);
 
-          document.getElementById("tituloBilletera").innerHTML = `Tu dinero es de: $${this.dinero}`;
+          document.getElementById("tituloBilletera").innerHTML = `<i class="fa-solid fa-wallet me-1"></i> $${this.dinero}`;
 
           listaGastos.splice(i,1);
-
           
         }
 
       }
 
-      document.getElementById("tituloBilletera").innerHTML = `Tu dinero es de: $${this.dinero}`;
+      document.getElementById("tituloBilletera").innerHTML = `<i class="fa-solid fa-wallet me-1"></i> $${this.dinero}`;
 
       insertarStorage("listaDeGastos",JSON.stringify(listaGastos));
 

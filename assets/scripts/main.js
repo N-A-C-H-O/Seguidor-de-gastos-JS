@@ -53,7 +53,7 @@ if (nombreStorage && billeteraStorage) {
 
   document.getElementById("tituloBilletera").style.display = "block";
   
-  document.getElementById("tituloBilletera").innerHTML = `Tu dinero es de: $${usuario.dinero}`;
+  document.getElementById("tituloBilletera").innerHTML = `<i class="fa-solid fa-wallet me-1"></i> $${usuario.dinero}`;
   
   botonUsuarioGastos.style.display = "block";
 
@@ -61,13 +61,7 @@ if (nombreStorage && billeteraStorage) {
 
   document.getElementById("botonResetearDatos").style.display = "none";
 
-  if (listaGastosStorage) {
-
-    listaGastos = JSON.parse(listaGastosStorage);
-
-    botonVerGastos.style.display = "block";
-
-  }
+  listaGastos && ((listaGastos = JSON.parse(listaGastosStorage)) && (botonVerGastos.style.display = "block"));
 
 }
 
@@ -102,7 +96,7 @@ formulario.addEventListener("submit",(e) => {
 
   document.getElementById("tituloBilletera").style.display = "block";
   
-  document.getElementById("tituloBilletera").innerHTML = `Tu dinero es de: $${usuario.dinero}`;
+  document.getElementById("tituloBilletera").innerHTML = `<i class="fa-solid fa-wallet me-1"></i> $${usuario.dinero}`;
   
   botonUsuarioGastos.style.display = "block";
 
@@ -110,13 +104,19 @@ formulario.addEventListener("submit",(e) => {
 
   document.getElementById("botonResetearDatos").style.display = "none";
 
-  Swal.fire({
+  Swal.fire ({
+
     position: 'center',
+
     icon: 'success',
+
     title: '¡Cuenta creada con éxito!',
+
     showConfirmButton: false,
+
     timer: 1500
-  })
+
+  });
   
 });
 
@@ -125,6 +125,12 @@ botonUsuarioGastos.addEventListener("click",() => {
     if (usuario.dinero !== 0 && usuario.dinero !== "0") {
 
       document.querySelector(".segundo-formulario").style.display = "block";
+
+      document.getElementById("tituloUsuario").style.display = "none";
+
+      document.getElementById("tituloNombre").style.display = "block";
+
+      document.getElementById("tituloNombre").innerHTML = `<i class="fa-solid fa-user me-1"></i> ${usuario.nombre}`;
   
       botonUsuarioGastos.style.display = "none";
 
@@ -138,7 +144,7 @@ botonUsuarioGastos.addEventListener("click",() => {
 
     else {
 
-      Swal.fire({
+      Swal.fire ({
 
         icon: 'error',
   
@@ -146,18 +152,15 @@ botonUsuarioGastos.addEventListener("click",() => {
   
         text: '¡No tienes más dinero!',
   
-      })
+      });
 
     }
-
-    
-
   
 });
 
 botonBorrarDatos.addEventListener("click",() =>{
 
-  Swal.fire({
+  Swal.fire ({
 
     title: '¿Estás seguro?',
 
@@ -221,9 +224,9 @@ botonBorrarDatos.addEventListener("click",() =>{
 
     }
 
-  })
+  });
 
-})
+});
 
 botonCrearGasto.addEventListener("click",() => {
 
@@ -245,7 +248,7 @@ botonCrearGasto.addEventListener("click",() => {
   
     document.getElementById("botonResetearDatos").style.display = "none";
 
-    Swal.fire({
+    Swal.fire ({
 
       icon: 'error',
 
@@ -253,7 +256,7 @@ botonCrearGasto.addEventListener("click",() => {
 
       text: '¡No tienes más dinero!',
 
-    })
+    });
   
   }
 
@@ -263,9 +266,9 @@ botonCrearGasto.addEventListener("click",() => {
 
     let sumaCantidadGastos = listaGastos.length;
 
-    if (cantidadGastos !== sumaCantidadGastos) {
+    cantidadGastos !== sumaCantidadGastos && ( 
 
-      Swal.fire({
+      Swal.fire ({
 
         position: 'bottom-end',
     
@@ -279,11 +282,11 @@ botonCrearGasto.addEventListener("click",() => {
     
       })
 
-    }
+    );
 
   }
     
-  document.getElementById("tituloBilletera").innerHTML = `Tu dinero es de: $${usuario.dinero}`;
+  document.getElementById("tituloBilletera").innerHTML = `<i class="fa-solid fa-wallet me-1"></i> $${usuario.dinero}`;
   
   if (tieneGastos === true) {
 
@@ -297,12 +300,19 @@ botonCrearGasto.addEventListener("click",() => {
   
 });
 
-
 botonVerGastos.addEventListener("click", () => {
   
   document.querySelector(".segundo-formulario").style.display = "none";
 
   document.getElementById("botonResetearDatos").style.display = "none";
+
+  listaGastos.length !== 0 && (document.getElementById("usuarioListaGastos").style.display = "block");
+
+  document.getElementById("tituloUsuario").style.display = "none";
+
+  document.getElementById("tituloNombre").style.display = "block";
+
+  document.getElementById("tituloNombre").innerHTML = `<i class="fa-solid fa-user me-1"></i> ${usuario.nombre}`;
     
   usuario.verGastos();
 
@@ -315,6 +325,8 @@ botonVerGastos.addEventListener("click", () => {
   botonCrearGasto.style.display = "none";
 
   botonRegresar.style.display = "block";
+
+  listaGastos.length !== 0 && (botonSumaTotalGastos.style.display = "block");
   
 });
 
@@ -322,9 +334,16 @@ botonRegresar.addEventListener("click", () => {
 
   location.reload()
 
+});
+
+botonSumaTotalGastos.addEventListener("click", () => {
+
+  Swal.fire(`Gastaste $${usuario.sumarTotalGastos()} en total`);
+
+});
 
 
-})
+
 
 document.getElementById("listaDeGastos").addEventListener("click", (e) => {
   
@@ -350,11 +369,13 @@ document.getElementById("listaDeGastos").addEventListener("click", (e) => {
 
       cancelButtonText: 'Cancelar'
 
-    }).then((result) => {
+    })
+    
+    .then((result) => {
 
       if (result.isConfirmed) {
 
-        Swal.fire(
+        Swal.fire (
 
           '¡Eliminado!',
 
@@ -362,16 +383,18 @@ document.getElementById("listaDeGastos").addEventListener("click", (e) => {
 
           'success'
 
-        )
+        );
 
         usuario.eliminarGasto(e.target.dataset.gasto);
 
+        listaGastos.length === 0 && (document.getElementById("usuarioListaGastos").style.display = "none");
+
       }
 
-    })
+    });
 
   }
 
-})
+});
 
 
