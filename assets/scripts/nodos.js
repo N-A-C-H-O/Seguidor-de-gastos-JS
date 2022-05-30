@@ -8,6 +8,8 @@ let inputTituloGasto = document.getElementById("usuarioTituloGasto");
 
 let inputMontoGasto = document.getElementById("usuarioMontoGasto");
 
+let selectCategoria = document.getElementById("selectCategoria");
+
 let botonUsuarioGastos = document.getElementById("botonUsuarioGastos");
 
 let botonEnviarDatos = document.getElementById("botonEnviarDatos");

@@ -17,21 +17,32 @@ let gasto;
 
 let motivo;
 
+let categoria;
+
 let listaGastos = [];
 
 let tieneGastos = false;
 
-const obtenerStorage = (valor) => sessionStorage.getItem(valor);
 
-const insertarStorage = (clave,valor) => sessionStorage.setItem(clave,valor);
+const llamarCategorias = async () => {
 
-const removerStorage = (clave) => sessionStorage.removeItem(clave);
+  const response = await fetch("categoriasGasto.json");
 
-let nombreStorage = obtenerStorage("nombreUsuario");
+  const data = await response.json();
 
-let billeteraStorage = obtenerStorage("dineroUsuario");
+  data.forEach(categoria => {
+    
+    let nuevaOpcion = document.createElement("option");
 
-let listaGastosStorage = obtenerStorage("listaDeGastos");
+    nuevaOpcion.innerHTML = categoria;
+
+    selectCategoria.append(nuevaOpcion);
+
+  });
+
+}
+
+llamarCategorias();
 
 
 const usuario = new Persona("user",0);
@@ -61,7 +72,7 @@ if (nombreStorage && billeteraStorage) {
 
   document.getElementById("botonResetearDatos").style.display = "none";
 
-  listaGastos && ((listaGastos = JSON.parse(listaGastosStorage)) && (botonVerGastos.style.display = "block"));
+  listaGastosStorage && ((listaGastos = JSON.parse(listaGastosStorage)) && (botonVerGastos.style.display = "block"));
 
 }
 
@@ -222,6 +233,8 @@ botonBorrarDatos.addEventListener("click",() =>{
 
       document.getElementById("tituloBilletera").style.display = "none";
 
+      document.getElementById("tituloNombre").style.display = "none";
+
     }
 
   });
@@ -237,6 +250,8 @@ botonCrearGasto.addEventListener("click",() => {
   inputMontoGasto.value = "";
   
   motivo = inputTituloGasto.value;
+
+  categoria = selectCategoria.value;
   
   inputTituloGasto.value = "";
 
@@ -332,7 +347,19 @@ botonVerGastos.addEventListener("click", () => {
 
 botonRegresar.addEventListener("click", () => {
 
-  location.reload()
+  botonUsuarioGastos.style.display = "block";
+
+  botonBorrarDatos.style.display = "block";
+  
+  botonVerGastos.style.display = "block";
+
+  botonRegresar.style.display = "none";
+
+  botonSumaTotalGastos.style.display = "none";
+
+  document.getElementById("usuarioListaGastos").style.display = "none";
+
+  document.getElementById("listaDeGastos").innerHTML = "";
 
 });
 
@@ -341,9 +368,6 @@ botonSumaTotalGastos.addEventListener("click", () => {
   Swal.fire(`Gastaste $${usuario.sumarTotalGastos()} en total`);
 
 });
-
-
-
 
 document.getElementById("listaDeGastos").addEventListener("click", (e) => {
   
@@ -396,5 +420,3 @@ document.getElementById("listaDeGastos").addEventListener("click", (e) => {
   }
 
 });
-
-
